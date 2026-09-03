@@ -1,7 +1,6 @@
 import AppKit
+import MilkTeaDomain
 import SwiftUI
-
-// MARK: - 奶茶宠物图案
 
 struct MilkTeaArtwork: View {
     let milkTea: MilkTea
@@ -34,7 +33,13 @@ private final class MilkTeaImageCache {
             return image
         }
 
-        guard let url = Bundle.module.url(forResource: name, withExtension: "png"),
+        #if SWIFT_PACKAGE
+        let bundle = Bundle.module
+        #else
+        let bundle = Bundle.main
+        #endif
+
+        guard let url = bundle.url(forResource: name, withExtension: "png"),
               let image = NSImage(contentsOf: url) else {
             return nil
         }
@@ -42,8 +47,6 @@ private final class MilkTeaImageCache {
         return image
     }
 }
-
-// MARK: - 动效：悬停时摇一摇
 
 private struct HoverShakeEffect: GeometryEffect {
     var progress: CGFloat

@@ -1,0 +1,163 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		100000000000000000000001 /* MilkTeaPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* MilkTeaPetApp.swift */; };
+		100000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppDelegate.swift */; };
+		100000000000000000000003 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* AppDependencies.swift */; };
+		100000000000000000000004 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000004 /* AppCoordinator.swift */; };
+		100000000000000000000005 /* MilkTeaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000005 /* MilkTeaStore.swift */; };
+		100000000000000000000006 /* PetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000006 /* PetView.swift */; };
+		100000000000000000000007 /* MilkTeaArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000007 /* MilkTeaArtwork.swift */; };
+		100000000000000000000008 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000008 /* ReminderScheduler.swift */; };
+		100000000000000000000009 /* ReminderBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000009 /* ReminderBubble.swift */; };
+		10000000000000000000000A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000A /* SettingsViewModel.swift */; };
+		10000000000000000000000B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000B /* SettingsView.swift */; };
+		10000000000000000000000C /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000C /* FloatingPanel.swift */; };
+		10000000000000000000000D /* PanelMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000D /* PanelMetrics.swift */; };
+		10000000000000000000000E /* WindowPlacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000E /* WindowPlacer.swift */; };
+		10000000000000000000000F /* PetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000000F /* PetWindowController.swift */; };
+		100000000000000000000010 /* ReminderWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000010 /* ReminderWindowController.swift */; };
+		100000000000000000000011 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000011 /* SettingsWindowController.swift */; };
+		100000000000000000000012 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000012 /* AppTheme.swift */; };
+		100000000000000000000013 /* milk-tea-pet.png in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001 /* milk-tea-pet.png */; };
+		100000000000000000000014 /* MilkTea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000001 /* MilkTea.swift */; };
+		100000000000000000000015 /* ReminderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000002 /* ReminderSettings.swift */; };
+		100000000000000000000016 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000003 /* Repositories.swift */; };
+		100000000000000000000017 /* ReminderScheduleCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000004 /* ReminderScheduleCalculator.swift */; };
+		100000000000000000000018 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000001 /* CoreDataStack.swift */; };
+		100000000000000000000019 /* CoreDataMilkTeaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000002 /* CoreDataMilkTeaRepository.swift */; };
+		10000000000000000000001A /* UserDefaultsSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000003 /* UserDefaultsSettingsRepository.swift */; };
+		10000000000000000000001B /* ReminderScheduleCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000001 /* ReminderScheduleCalculatorTests.swift */; };
+		10000000000000000000001C /* CoreDataMilkTeaRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000002 /* CoreDataMilkTeaRepositoryTests.swift */; };
+		10000000000000000000001D /* UserDefaultsSettingsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000003 /* UserDefaultsSettingsRepositoryTests.swift */; };
+		10000000000000000000001E /* MilkTeaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000004 /* MilkTeaStoreTests.swift */; };
+		10000000000000000000001F /* WindowPlacerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000005 /* WindowPlacerTests.swift */; };
+		100000000000000000000020 /* libMilkTeaDomain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* libMilkTeaDomain.a */; };
+		100000000000000000000021 /* libMilkTeaPersistence.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00000000000000000000003 /* libMilkTeaPersistence.a */; };
+		100000000000000000000022 /* libMilkTeaDomain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* libMilkTeaDomain.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		500000000000000000000001 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000001; remoteInfo = MilkTeaDomain; };
+		500000000000000000000002 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000001; remoteInfo = MilkTeaDomain; };
+		500000000000000000000003 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000002; remoteInfo = MilkTeaPersistence; };
+		500000000000000000000004 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000003; remoteInfo = MilkTeaPet; };
+		500000000000000000000005 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000001; remoteInfo = MilkTeaDomain; };
+		500000000000000000000006 = {isa = PBXContainerItemProxy; containerPortal = 600000000000000000000001 /* Project object */; proxyType = 1; remoteGlobalIDString = 300000000000000000000002; remoteInfo = MilkTeaPersistence; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A00000000000000000000001 /* MilkTeaPetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/MilkTeaPetApp.swift; sourceTree = "<group>"; };
+		A00000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/AppDelegate.swift; sourceTree = "<group>"; };
+		A00000000000000000000003 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/AppDependencies.swift; sourceTree = "<group>"; };
+		A00000000000000000000004 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/AppCoordinator.swift; sourceTree = "<group>"; };
+		A00000000000000000000005 /* MilkTeaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Pet/MilkTeaStore.swift; sourceTree = "<group>"; };
+		A00000000000000000000006 /* PetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Pet/PetView.swift; sourceTree = "<group>"; };
+		A00000000000000000000007 /* MilkTeaArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Pet/MilkTeaArtwork.swift; sourceTree = "<group>"; };
+		A00000000000000000000008 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Reminder/ReminderScheduler.swift; sourceTree = "<group>"; };
+		A00000000000000000000009 /* ReminderBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Reminder/ReminderBubble.swift; sourceTree = "<group>"; };
+		A0000000000000000000000A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Settings/SettingsViewModel.swift; sourceTree = "<group>"; };
+		A0000000000000000000000B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		A0000000000000000000000C /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windowing/FloatingPanel.swift; sourceTree = "<group>"; };
+		A0000000000000000000000D /* PanelMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windowing/PanelMetrics.swift; sourceTree = "<group>"; };
+		A0000000000000000000000E /* WindowPlacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windowing/WindowPlacer.swift; sourceTree = "<group>"; };
+		A0000000000000000000000F /* PetWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windows/PetWindowController.swift; sourceTree = "<group>"; };
+		A00000000000000000000010 /* ReminderWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windows/ReminderWindowController.swift; sourceTree = "<group>"; };
+		A00000000000000000000011 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windows/SettingsWindowController.swift; sourceTree = "<group>"; };
+		A00000000000000000000012 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI/AppTheme.swift; sourceTree = "<group>"; };
+		A00000000000000000000013 /* MilkTeaPet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MilkTeaPet/MilkTeaPet.entitlements; sourceTree = SOURCE_ROOT; };
+		B00000000000000000000001 /* milk-tea-pet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Resources/milk-tea-pet.png; sourceTree = "<group>"; };
+		C00000000000000000000001 /* MilkTeaPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MilkTeaPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00000000000000000000002 /* libMilkTeaDomain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMilkTeaDomain.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00000000000000000000003 /* libMilkTeaPersistence.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMilkTeaPersistence.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00000000000000000000004 /* MilkTeaPetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MilkTeaPetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00000000000000000000001 /* MilkTea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/MilkTea.swift; sourceTree = "<group>"; };
+		D00000000000000000000002 /* ReminderSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/ReminderSettings.swift; sourceTree = "<group>"; };
+		D00000000000000000000003 /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories/Repositories.swift; sourceTree = "<group>"; };
+		D00000000000000000000004 /* ReminderScheduleCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/ReminderScheduleCalculator.swift; sourceTree = "<group>"; };
+		E00000000000000000000001 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData/CoreDataStack.swift; sourceTree = "<group>"; };
+		E00000000000000000000002 /* CoreDataMilkTeaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData/CoreDataMilkTeaRepository.swift; sourceTree = "<group>"; };
+		E00000000000000000000003 /* UserDefaultsSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings/UserDefaultsSettingsRepository.swift; sourceTree = "<group>"; };
+		F00000000000000000000001 /* ReminderScheduleCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaDomainTests/ReminderScheduleCalculatorTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000002 /* CoreDataMilkTeaRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPersistenceTests/CoreDataMilkTeaRepositoryTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000003 /* UserDefaultsSettingsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPersistenceTests/UserDefaultsSettingsRepositoryTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000004 /* MilkTeaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPetTests/MilkTeaStoreTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000005 /* WindowPlacerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPetTests/WindowPlacerTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		200000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000002 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000022 /* libMilkTeaDomain.a in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000003 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000020 /* libMilkTeaDomain.a in Frameworks */, 100000000000000000000021 /* libMilkTeaPersistence.a in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000004 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000001 = {isa = PBXGroup; children = (000000000000000000000002 /* MilkTeaPet */, 000000000000000000000003 /* MilkTeaDomain */, 000000000000000000000004 /* MilkTeaPersistence */, 000000000000000000000005 /* Tests */, 000000000000000000000006 /* Products */,); sourceTree = "<group>"; };
+		000000000000000000000002 /* MilkTeaPet */ = {isa = PBXGroup; children = (A00000000000000000000001, A00000000000000000000002, A00000000000000000000003, A00000000000000000000004, A00000000000000000000005, A00000000000000000000006, A00000000000000000000007, A00000000000000000000008, A00000000000000000000009, A0000000000000000000000A, A0000000000000000000000B, A0000000000000000000000C, A0000000000000000000000D, A0000000000000000000000E, A0000000000000000000000F, A00000000000000000000010, A00000000000000000000011, A00000000000000000000012, B00000000000000000000001, A00000000000000000000013,); path = Sources/MilkTeaPet; sourceTree = SOURCE_ROOT; };
+		000000000000000000000003 /* MilkTeaDomain */ = {isa = PBXGroup; children = (D00000000000000000000001, D00000000000000000000002, D00000000000000000000003, D00000000000000000000004,); path = Sources/MilkTeaDomain; sourceTree = SOURCE_ROOT; };
+		000000000000000000000004 /* MilkTeaPersistence */ = {isa = PBXGroup; children = (E00000000000000000000001, E00000000000000000000002, E00000000000000000000003,); path = Sources/MilkTeaPersistence; sourceTree = SOURCE_ROOT; };
+		000000000000000000000005 /* Tests */ = {isa = PBXGroup; children = (F00000000000000000000001, F00000000000000000000002, F00000000000000000000003, F00000000000000000000004, F00000000000000000000005,); path = Tests; sourceTree = SOURCE_ROOT; };
+		000000000000000000000006 /* Products */ = {isa = PBXGroup; children = (C00000000000000000000001, C00000000000000000000002, C00000000000000000000003, C00000000000000000000004,); name = Products; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		300000000000000000000001 /* MilkTeaDomain */ = {isa = PBXNativeTarget; buildConfigurationList = 700000000000000000000002; buildPhases = (200000000000000000000011, 200000000000000000000001,); buildRules = (); dependencies = (); name = MilkTeaDomain; productName = MilkTeaDomain; productReference = C00000000000000000000002; productType = "com.apple.product-type.library.static"; };
+		300000000000000000000002 /* MilkTeaPersistence */ = {isa = PBXNativeTarget; buildConfigurationList = 700000000000000000000003; buildPhases = (200000000000000000000012, 200000000000000000000002,); buildRules = (); dependencies = (500000000000000000000011,); name = MilkTeaPersistence; productName = MilkTeaPersistence; productReference = C00000000000000000000003; productType = "com.apple.product-type.library.static"; };
+		300000000000000000000003 /* MilkTeaPet */ = {isa = PBXNativeTarget; buildConfigurationList = 700000000000000000000004; buildPhases = (200000000000000000000013, 200000000000000000000003, 200000000000000000000021,); buildRules = (); dependencies = (500000000000000000000012, 500000000000000000000013,); name = MilkTeaPet; productName = MilkTeaPet; productReference = C00000000000000000000001; productType = "com.apple.product-type.application"; };
+		300000000000000000000004 /* MilkTeaPetTests */ = {isa = PBXNativeTarget; buildConfigurationList = 700000000000000000000005; buildPhases = (200000000000000000000014, 200000000000000000000004,); buildRules = (); dependencies = (500000000000000000000014, 500000000000000000000015, 500000000000000000000016,); name = MilkTeaPetTests; productName = MilkTeaPetTests; productReference = C00000000000000000000004; productType = "com.apple.product-type.bundle.unit-test"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		600000000000000000000001 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = YES; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = {300000000000000000000003 = {CreatedOnToolsVersion = 16.0;}; 300000000000000000000004 = {CreatedOnToolsVersion = 16.0; TestTargetID = 300000000000000000000003;};};}; buildConfigurationList = 700000000000000000000001; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = 000000000000000000000001; productRefGroup = 000000000000000000000006; projectDirPath = ""; projectRoot = ""; targets = (300000000000000000000001, 300000000000000000000002, 300000000000000000000003, 300000000000000000000004,); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		200000000000000000000021 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000013 /* milk-tea-pet.png in Resources */,); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		200000000000000000000011 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000014, 100000000000000000000015, 100000000000000000000016, 100000000000000000000017,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000012 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000018, 100000000000000000000019, 10000000000000000000001A,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000013 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000001, 100000000000000000000002, 100000000000000000000003, 100000000000000000000004, 100000000000000000000005, 100000000000000000000006, 100000000000000000000007, 100000000000000000000008, 100000000000000000000009, 10000000000000000000000A, 10000000000000000000000B, 10000000000000000000000C, 10000000000000000000000D, 10000000000000000000000E, 10000000000000000000000F, 100000000000000000000010, 100000000000000000000011, 100000000000000000000012,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000014 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (10000000000000000000001B, 10000000000000000000001C, 10000000000000000000001D, 10000000000000000000001E, 10000000000000000000001F,); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		500000000000000000000011 = {isa = PBXTargetDependency; target = 300000000000000000000001; targetProxy = 500000000000000000000001; };
+		500000000000000000000012 = {isa = PBXTargetDependency; target = 300000000000000000000001; targetProxy = 500000000000000000000002; };
+		500000000000000000000013 = {isa = PBXTargetDependency; target = 300000000000000000000002; targetProxy = 500000000000000000000003; };
+		500000000000000000000014 = {isa = PBXTargetDependency; target = 300000000000000000000003; targetProxy = 500000000000000000000004; };
+		500000000000000000000015 = {isa = PBXTargetDependency; target = 300000000000000000000001; targetProxy = 500000000000000000000005; };
+		500000000000000000000016 = {isa = PBXTargetDependency; target = 300000000000000000000002; targetProxy = 500000000000000000000006; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		400000000000000000000001 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; ENABLE_TESTABILITY = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = macosx; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; SWIFT_VERSION = 5.0;}; name = Debug; };
+		400000000000000000000002 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = macosx; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_VERSION = 5.0;}; name = Release; };
+		400000000000000000000011 = {isa = XCBuildConfiguration; buildSettings = {DEFINES_MODULE = YES; MACH_O_TYPE = staticlib; PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES;}; name = Debug; };
+		400000000000000000000012 = {isa = XCBuildConfiguration; buildSettings = {DEFINES_MODULE = YES; MACH_O_TYPE = staticlib; PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES;}; name = Release; };
+		400000000000000000000021 = {isa = XCBuildConfiguration; buildSettings = {DEFINES_MODULE = YES; MACH_O_TYPE = staticlib; PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES;}; name = Debug; };
+		400000000000000000000022 = {isa = XCBuildConfiguration; buildSettings = {DEFINES_MODULE = YES; MACH_O_TYPE = staticlib; PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES;}; name = Release; };
+		400000000000000000000031 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = MilkTeaPet/MilkTeaPet.entitlements; CODE_SIGN_STYLE = Automatic; COMBINE_HIDPI_IMAGES = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_LSUIElement = YES; PRODUCT_BUNDLE_IDENTIFIER = com.milkteapet.MilkTeaPet; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Debug; };
+		400000000000000000000032 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_ENTITLEMENTS = MilkTeaPet/MilkTeaPet.entitlements; CODE_SIGN_STYLE = Automatic; COMBINE_HIDPI_IMAGES = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_LSUIElement = YES; PRODUCT_BUNDLE_IDENTIFIER = com.milkteapet.MilkTeaPet; PRODUCT_NAME = "$(TARGET_NAME)";}; name = Release; };
+		400000000000000000000041 = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.milkteapet.MilkTeaPetTests; PRODUCT_NAME = "$(TARGET_NAME)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MilkTeaPet.app/Contents/MacOS/MilkTeaPet";}; name = Debug; };
+		400000000000000000000042 = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.milkteapet.MilkTeaPetTests; PRODUCT_NAME = "$(TARGET_NAME)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MilkTeaPet.app/Contents/MacOS/MilkTeaPet";}; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		700000000000000000000001 = {isa = XCConfigurationList; buildConfigurations = (400000000000000000000001, 400000000000000000000002,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		700000000000000000000002 = {isa = XCConfigurationList; buildConfigurations = (400000000000000000000011, 400000000000000000000012,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		700000000000000000000003 = {isa = XCConfigurationList; buildConfigurations = (400000000000000000000021, 400000000000000000000022,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		700000000000000000000004 = {isa = XCConfigurationList; buildConfigurations = (400000000000000000000031, 400000000000000000000032,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		700000000000000000000005 = {isa = XCConfigurationList; buildConfigurations = (400000000000000000000041, 400000000000000000000042,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = 600000000000000000000001 /* Project object */;
+}
