@@ -3,9 +3,35 @@ import AppKit
 
 // MARK: - 设置存储
 
+struct ReminderSettings: Codable, Hashable {
+    var hour: Int
+    var minute: Int
+    var second: Int
+    var message: String
+    var selectedMilkTeaID: MilkTea.ID
+}
+
 enum PetSettings {
     static let timeKey = "reminderTime"      // "HH:mm:ss"
     static let messageKey = "reminderMessage"
+    static let selectedMilkTeaIDKey = "selectedMilkTeaID"
+
+    static func load() -> ReminderSettings {
+        let components = loadTime() ?? DateComponents(hour: 15, minute: 0, second: 0)
+        return ReminderSettings(
+            hour: components.hour ?? 15,
+            minute: components.minute ?? 0,
+            second: components.second ?? 0,
+            message: loadMessage(),
+            selectedMilkTeaID: loadSelectedMilkTeaID()
+        )
+    }
+
+    static func save(_ settings: ReminderSettings) {
+        saveTime(String(format: "%02d:%02d:%02d", settings.hour, settings.minute, settings.second))
+        saveMessage(settings.message)
+        saveSelectedMilkTeaID(settings.selectedMilkTeaID)
+    }
 
     static func loadTime() -> DateComponents? {
         let value = UserDefaults.standard.string(forKey: timeKey) ?? "15:00:00"
@@ -35,6 +61,14 @@ enum PetSettings {
 
     static func saveMessage(_ s: String) {
         UserDefaults.standard.set(s, forKey: messageKey)
+    }
+
+    static func loadSelectedMilkTeaID() -> MilkTea.ID {
+        UserDefaults.standard.string(forKey: selectedMilkTeaIDKey) ?? MilkTea.brownSugar.id
+    }
+
+    static func saveSelectedMilkTeaID(_ id: MilkTea.ID) {
+        UserDefaults.standard.set(id, forKey: selectedMilkTeaIDKey)
     }
 }
 
@@ -78,10 +112,6 @@ final class ReminderScheduler: ObservableObject {
         }
         RunLoop.main.add(timer, forMode: .common)
         self.timer = timer
-    }
-
-    func testReminder(message: String) {
-        requestReminder(message: message)
     }
 
     func didPresentReminder() {

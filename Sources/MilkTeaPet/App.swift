@@ -1,18 +1,19 @@
 import SwiftUI
 import AppKit
 
-// MARK: - 像素风通用配色
+// MARK: - 中性通用配色
 
-enum PixelTheme {
-    static let brown = Color(red: 0.36, green: 0.20, blue: 0.12)
-    static let cream = Color(red: 0.98, green: 0.94, blue: 0.86)
-    static let tea = Color(red: 0.87, green: 0.64, blue: 0.38)
-    static let gray = Color(red: 0.92, green: 0.92, blue: 0.92)
-    static let foam = Color(red: 1.00, green: 0.97, blue: 0.90)
-    static let caramel = Color(red: 0.91, green: 0.63, blue: 0.32)
-    static let caramelLight = Color(red: 0.98, green: 0.87, blue: 0.68)
-    static let cocoa = Color(red: 0.29, green: 0.16, blue: 0.10)
-    static let mutedBrown = Color(red: 0.52, green: 0.39, blue: 0.31)
+enum AppTheme {
+    static let windowBackground = Color(red: 0.965, green: 0.958, blue: 0.948)
+    static let surface = Color(red: 0.995, green: 0.992, blue: 0.986)
+    static let surfaceMuted = Color(red: 0.935, green: 0.925, blue: 0.912)
+    static let border = Color(red: 0.82, green: 0.80, blue: 0.77)
+    static let windowBorder = Color(red: 0.62, green: 0.57, blue: 0.52)
+    static let textPrimary = Color(red: 0.18, green: 0.17, blue: 0.16)
+    static let textSecondary = Color(red: 0.43, green: 0.41, blue: 0.38)
+    static let accent = Color(red: 0.38, green: 0.31, blue: 0.27)
+    static let danger = Color(red: 0.76, green: 0.22, blue: 0.20)
+    static let success = Color(red: 0.22, green: 0.48, blue: 0.31)
 }
 
 // MARK: - App 入口
@@ -28,14 +29,14 @@ struct MilkTeaPetApp: App {
     }
 }
 
-// MARK: - 无边框置顶宠物窗口（尺寸贴合奶茶图案）
+// MARK: - 无边框置顶宠物窗口
 
-let petWidth: CGFloat = 112   // 16 像素 × 7
-let petHeight: CGFloat = 140  // 20 像素 × 7
+let petWidth: CGFloat = 112
+let petHeight: CGFloat = 140
 
 enum PanelMetrics {
-    static let reminderSize = NSSize(width: 252, height: 190)
-    static let settingsSize = NSSize(width: 400, height: 360)
+    static let reminderSize = NSSize(width: 268, height: 128)
+    static let settingsSize = NSSize(width: 400, height: 300)
     static let screenMargin: CGFloat = 12
 }
 
@@ -183,14 +184,14 @@ enum WindowPlacer {
     }
 }
 
-// MARK: - 像素风无边框小面板
+// MARK: - 无边框小面板
 
-final class PixelPanel: NSPanel {
+final class FloatingPanel: NSPanel {
     override var canBecomeKey: Bool { true }
 }
 
-func makePixelPanel(size: NSSize) -> NSPanel {
-    let panel = PixelPanel(contentRect: NSRect(origin: .zero, size: size),
+func makeFloatingPanel(size: NSSize) -> NSPanel {
+    let panel = FloatingPanel(contentRect: NSRect(origin: .zero, size: size),
                            styleMask: [.borderless, .nonactivatingPanel],
                            backing: .buffered, defer: false)
     panel.isFloatingPanel = true
@@ -219,7 +220,7 @@ final class ReminderWindowController {
         close()
         self.message = message ?? PetSettings.loadMessage()
 
-        let panel = makePixelPanel(size: PanelMetrics.reminderSize)
+        let panel = makeFloatingPanel(size: PanelMetrics.reminderSize)
         panel.animationBehavior = .none
         let hosting = NSHostingView(rootView: makeBubble(edge: .above))
         hosting.frame = NSRect(origin: .zero, size: PanelMetrics.reminderSize)
@@ -281,7 +282,7 @@ final class ReminderWindowController {
     }
 }
 
-// MARK: - 设置窗口（独立居中显示，像素风）
+// MARK: - 设置窗口（独立居中显示）
 
 final class SettingsWindowController: NSObject {
     static let shared = SettingsWindowController()
@@ -290,21 +291,19 @@ final class SettingsWindowController: NSObject {
     func show(
         relativeTo petWindow: NSWindow,
         onSettingsSaved: @escaping () -> Void,
-        onTestReminder: @escaping (String) -> Void
+        milkTeaStore: MilkTeaStore
     ) {
         if let panel {
             panel.makeKeyAndOrderFront(nil)
             return
         }
 
-        let panel = makePixelPanel(size: PanelMetrics.settingsSize)
+        let panel = makeFloatingPanel(size: PanelMetrics.settingsSize)
         panel.isMovable = true
         panel.isMovableByWindowBackground = true
         let hosting = NSHostingView(rootView:
-            SettingsView(
-                onSettingsSaved: onSettingsSaved,
-                onTestReminder: onTestReminder
-            )
+            SettingsView(onSettingsSaved: onSettingsSaved)
+                .environmentObject(milkTeaStore)
                 .frame(width: PanelMetrics.settingsSize.width,
                        height: PanelMetrics.settingsSize.height))
         hosting.frame = NSRect(origin: .zero, size: PanelMetrics.settingsSize)
@@ -326,12 +325,14 @@ final class SettingsWindowController: NSObject {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     var panel: PetPanel?
     let scheduler = ReminderScheduler()
+    let milkTeaStore = MilkTeaStore()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
         let panel = PetPanel()
         let reminderScheduler = scheduler
+        let sharedMilkTeaStore = milkTeaStore
         let hosting = NSHostingView(rootView:
             PetView(
                 onShowSettings: { [weak panel] in
@@ -339,7 +340,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     SettingsWindowController.shared.show(
                         relativeTo: panel,
                         onSettingsSaved: reminderScheduler.reschedule,
-                        onTestReminder: reminderScheduler.testReminder
+                        milkTeaStore: sharedMilkTeaStore
                     )
                 },
                 onShowReminder: { [weak panel] message in
@@ -351,7 +352,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 },
                 scheduler: reminderScheduler
             )
-                .environmentObject(reminderScheduler))
+                .environmentObject(reminderScheduler)
+                .environmentObject(sharedMilkTeaStore))
         hosting.frame = NSRect(x: 0, y: 0, width: petWidth, height: petHeight)
         panel.contentView = hosting
         panel.orderFrontRegardless()
@@ -368,9 +370,10 @@ struct PetView: View {
     let onShowReminder: (String?) -> Void
 
     @ObservedObject var scheduler: ReminderScheduler
+    @EnvironmentObject private var milkTeaStore: MilkTeaStore
 
     var body: some View {
-        AnimatedMilkTea(pixelSize: 7)
+        AnimatedMilkTea(milkTea: milkTeaStore.selectedMilkTea)
             .contextMenu {
                 Button("设置…", action: onShowSettings)
                 Divider()
@@ -393,31 +396,6 @@ struct PetView: View {
     }
 }
 
-// MARK: - 像素风卡片容器
-// 米色底 + 棕色粗边框 + 右下硬边阴影块，模仿像素画风格
-
-struct PixelCard<Content: View>: View {
-    var cornerRadius: CGFloat = 0
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        content()
-            .padding(16)
-            .background(PixelTheme.cream)
-            .overlay(
-                Rectangle()
-                    .stroke(PixelTheme.brown, lineWidth: 3)
-            )
-            .background(alignment: .bottomTrailing) {
-                Rectangle()
-                    .fill(PixelTheme.brown)
-                    .offset(x: 4, y: 4)
-            }
-            .padding(.trailing, 4)
-            .padding(.bottom, 4)
-    }
-}
-
 // MARK: - 提醒气泡
 
 struct ReminderBubble: View {
@@ -430,71 +408,76 @@ struct ReminderBubble: View {
             if edge == .below {
                 tail
                     .rotationEffect(.degrees(180))
-                    .offset(y: 2)
             }
 
-            PixelCard {
-                VStack(spacing: 10) {
-                    Text("🧋 奶茶提醒")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(PixelTheme.brown)
-                    Text(text)
-                        .font(.system(size: 13))
-                        .foregroundColor(PixelTheme.brown)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .lineLimit(4)
-
-                    HStack(spacing: 10) {
-                        PixelButton(title: "来一杯", background: PixelTheme.tea,
-                                    foreground: .white, action: onClose)
-                        PixelButton(title: "今天不喝", background: PixelTheme.gray,
-                                    foreground: PixelTheme.brown, action: onClose)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-            }
+            bubbleBody
 
             if edge == .above {
-                tail.offset(y: -2)
+                tail
             }
         }
-        .padding(.horizontal, 4)
         .frame(width: PanelMetrics.reminderSize.width,
                height: PanelMetrics.reminderSize.height,
                alignment: edge == .above ? .bottom : .top)
     }
 
+    private var bubbleBody: some View {
+        VStack(spacing: 14) {
+            Text(text)
+                .font(.system(size: 14, weight: .regular))
+                .foregroundColor(AppTheme.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(2)
+                .lineLimit(2)
+                .frame(maxWidth: .infinity)
+
+            HStack(spacing: 8) {
+                BubbleButton(title: "来一杯", isPrimary: true, action: onClose)
+                BubbleButton(title: "今天不喝", isPrimary: false, action: onClose)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .frame(width: PanelMetrics.reminderSize.width, height: 120)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(AppTheme.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(AppTheme.windowBorder, lineWidth: 2)
+        )
+    }
+
     private var tail: some View {
         Triangle()
-            .fill(PixelTheme.cream)
-            .frame(width: 16, height: 10)
+            .fill(AppTheme.surface)
+            .frame(width: 14, height: 8)
             .overlay(
                 Triangle()
-                    .stroke(PixelTheme.brown, lineWidth: 3)
+                    .stroke(AppTheme.windowBorder, lineWidth: 2)
             )
     }
 }
 
-// MARK: - 像素风按钮
-
-struct PixelButton: View {
+struct BubbleButton: View {
     let title: String
-    var background: Color = PixelTheme.tea
-    var foreground: Color = .white
+    let isPrimary: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundColor(foreground)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 5)
-                .background(background)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(isPrimary ? .white : AppTheme.textPrimary)
+                .frame(maxWidth: .infinity)
+                .frame(height: 32)
+                .background(isPrimary ? AppTheme.accent : AppTheme.surfaceMuted)
                 .overlay(
-                    Rectangle().stroke(PixelTheme.brown, lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(isPrimary ? Color.clear : AppTheme.border, lineWidth: 1)
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
     }
@@ -511,203 +494,165 @@ struct Triangle: Shape {
     }
 }
 
-// MARK: - 设置窗口（珍珠奶茶主题）
+// MARK: - 设置窗口
+
+enum SaveFeedback: Equatable {
+    case idle
+    case success(String)
+    case error(String)
+}
 
 struct SettingsView: View {
     let onSettingsSaved: () -> Void
-    let onTestReminder: (String) -> Void
+
+    @EnvironmentObject private var milkTeaStore: MilkTeaStore
 
     @State private var hourText = "15"
     @State private var minuteText = "00"
     @State private var secondText = "00"
     @State private var message = ""
-    @State private var feedback = "设置只会保存在这台 Mac 上"
-    @State private var feedbackIsError = false
+    @State private var feedback: SaveFeedback = .idle
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(PixelTheme.foam)
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(AppTheme.windowBackground)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .stroke(PixelTheme.cocoa, lineWidth: 3)
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .strokeBorder(AppTheme.windowBorder, lineWidth: 2)
                 )
-                .shadow(color: PixelTheme.cocoa.opacity(0.28), radius: 0, x: 5, y: 5)
-                .padding(7)
+                .padding(1)
 
-            Circle()
-                .fill(PixelTheme.caramel.opacity(0.12))
-                .frame(width: 82, height: 82)
-                .offset(x: 168, y: -142)
-
-            Circle()
-                .fill(PixelTheme.brown.opacity(0.08))
-                .frame(width: 46, height: 46)
-                .offset(x: 184, y: 154)
-
-            VStack(spacing: 13) {
+            VStack(spacing: 0) {
                 header
-                timeSection
-                messageSection
-                footer
+                Spacer().frame(height: 12)
+                timeSection.padding(.horizontal, 8)
+                Spacer().frame(height: 20)
+                messageSection.padding(.horizontal, 8)
+                Spacer().frame(height: 20)
+                footer.padding(.horizontal, 8)
             }
-            .padding(.horizontal, 27)
-            .padding(.vertical, 23)
+            .padding(16)
         }
         .frame(width: PanelMetrics.settingsSize.width,
                height: PanelMetrics.settingsSize.height)
-        .onAppear {
-            message = PetSettings.loadMessage()
-            if let components = PetSettings.loadTime() {
-                hourText = String(format: "%02d", components.hour ?? 15)
-                minuteText = String(format: "%02d", components.minute ?? 0)
-                secondText = String(format: "%02d", components.second ?? 0)
-            }
-        }
+        .onAppear(perform: loadSettings)
+        .onChange(of: hourText) { _ in clearFeedback() }
+        .onChange(of: minuteText) { _ in clearFeedback() }
+        .onChange(of: secondText) { _ in clearFeedback() }
+        .onChange(of: message) { _ in clearFeedback() }
     }
 
     private var header: some View {
-        HStack(spacing: 12) {
-            MiniBobaCupIcon()
+        ZStack {
+            Text("设置")
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundColor(AppTheme.textPrimary)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text("奶茶时间")
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .foregroundColor(PixelTheme.cocoa)
-                Text("给今天留一点甜")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(PixelTheme.mutedBrown)
+            HStack {
+                Spacer()
+
+                Button {
+                    SettingsWindowController.shared.close()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(AppTheme.textSecondary)
+                        .frame(width: 28, height: 28)
+                        .background(Circle().fill(AppTheme.surfaceMuted))
+                }
+                .buttonStyle(.plain)
+                .help("关闭")
+                .accessibilityLabel("关闭")
             }
-
-            Spacer()
-
-            Button {
-                SettingsWindowController.shared.close()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(PixelTheme.cocoa)
-                    .frame(width: 28, height: 28)
-                    .background(Circle().fill(PixelTheme.caramelLight.opacity(0.72)))
-            }
-            .buttonStyle(.plain)
-            .help("关闭")
         }
+        .frame(height: 32)
     }
 
     private var timeSection: some View {
-        HStack(spacing: 14) {
-            VStack(alignment: .leading, spacing: 3) {
-                Label("提醒时间", systemImage: "clock.fill")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(PixelTheme.cocoa)
+        VStack(alignment: .leading, spacing: 10) {
+            Label("提醒时间", systemImage: "clock.fill")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(AppTheme.textPrimary)
+                .frame(height: 18)
 
-                Text("每天按设置时间提醒")
-                    .font(.system(size: 10))
-                    .foregroundColor(PixelTheme.mutedBrown)
-
-                Button(action: testReminder) {
-                    Label("测试气泡", systemImage: "play.fill")
-                        .font(.system(size: 9, weight: .semibold))
-                        .foregroundColor(PixelTheme.brown)
-                        .padding(.horizontal, 7)
-                        .frame(height: 22)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .fill(Color.white.opacity(0.72))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .stroke(PixelTheme.caramel.opacity(0.72), lineWidth: 1)
-                        )
-                }
-                .buttonStyle(.plain)
-                .help("使用当前提醒词预览气泡，不影响正式提醒")
-            }
-
-            Spacer(minLength: 8)
-
-            HStack(alignment: .top, spacing: 5) {
-                TimeTextField(text: $hourText, label: "时", accessibilityLabel: "小时")
+            HStack(spacing: 8) {
+                TimeTextField(text: $hourText, accessibilityLabel: "小时")
                 Text(":")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(PixelTheme.brown)
-                    .padding(.top, 6)
-                TimeTextField(text: $minuteText, label: "分", accessibilityLabel: "分钟")
+                    .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                    .foregroundColor(AppTheme.textSecondary)
+                TimeTextField(text: $minuteText, accessibilityLabel: "分钟")
                 Text(":")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundColor(PixelTheme.brown)
-                    .padding(.top, 6)
-                TimeTextField(text: $secondText, label: "秒", accessibilityLabel: "秒钟")
+                    .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                    .foregroundColor(AppTheme.textSecondary)
+                TimeTextField(text: $secondText, accessibilityLabel: "秒钟")
             }
         }
-        .padding(.horizontal, 15)
-        .padding(.vertical, 11)
-        .background(
-            RoundedRectangle(cornerRadius: 13, style: .continuous)
-                .fill(PixelTheme.caramelLight.opacity(0.52))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 13, style: .continuous)
-                .stroke(PixelTheme.caramel.opacity(0.55), lineWidth: 1.5)
-        )
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var messageSection: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("提醒词", systemImage: "bubble.left.fill")
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundColor(PixelTheme.cocoa)
+                .foregroundColor(AppTheme.textPrimary)
+                .frame(height: 18)
 
-            TextField("例如：今天要不要来一杯奶茶呀？", text: $message, axis: .vertical)
+            TextField("例如：今天要不要来一杯奶茶呀？", text: $message)
                 .textFieldStyle(.plain)
-                .font(.system(size: 13))
-                .foregroundColor(PixelTheme.cocoa)
-                .lineLimit(2...3)
-                .padding(.horizontal, 11)
-                .padding(.vertical, 9)
-                .frame(minHeight: 55, alignment: .topLeading)
+                .font(.system(size: 14))
+                .foregroundColor(AppTheme.textPrimary)
+                .padding(.horizontal, 12)
+                .frame(height: 48)
                 .background(
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .fill(Color.white.opacity(0.82))
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(AppTheme.surface)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .stroke(PixelTheme.caramel.opacity(0.58), lineWidth: 1.5)
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(AppTheme.border, lineWidth: 1)
                 )
+                .accessibilityLabel("提醒词")
+                .onSubmit(save)
         }
-        .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 13, style: .continuous)
-                .fill(PixelTheme.cream.opacity(0.78))
-        )
     }
 
     private var footer: some View {
         HStack(spacing: 12) {
-            Text(feedback)
-                .font(.system(size: 10, weight: .medium))
-                .foregroundColor(feedbackIsError ? .red : PixelTheme.mutedBrown)
-                .lineLimit(1)
+            if let feedbackMessage {
+                Label(feedbackMessage.text, systemImage: feedbackMessage.icon)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(feedbackMessage.color)
+                    .lineLimit(1)
+                    .transition(.opacity)
+            }
 
             Spacer(minLength: 8)
 
             Button(action: save) {
-                HStack(spacing: 6) {
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 10, weight: .bold))
-                    Text("保存设置")
-                        .font(.system(size: 12, weight: .bold))
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 15)
-                .frame(height: 34)
-                .background(
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-                        .fill(PixelTheme.brown)
-                )
+                Text("保存")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 96, height: 40)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(AppTheme.accent)
+                    )
             }
             .buttonStyle(.plain)
+            .keyboardShortcut(.defaultAction)
+        }
+        .frame(height: 40)
+    }
+
+    private var feedbackMessage: (text: String, icon: String, color: Color)? {
+        switch feedback {
+        case .idle:
+            return nil
+        case let .success(message):
+            return (message, "checkmark.circle.fill", AppTheme.success)
+        case let .error(message):
+            return (message, "exclamationmark.circle.fill", AppTheme.danger)
         }
     }
 
@@ -715,15 +660,17 @@ struct SettingsView: View {
         guard let hour = Int(hourText), (0...23).contains(hour),
               let minute = Int(minuteText), (0...59).contains(minute),
               let second = Int(secondText), (0...59).contains(second) else {
-            feedback = "请输入 00:00:00–23:59:59 之间的时间"
-            feedbackIsError = true
+            withAnimation(.easeOut(duration: 0.16)) {
+                feedback = .error("请输入有效时间")
+            }
             return
         }
 
         let trimmedMessage = message.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedMessage.isEmpty else {
-            feedback = "提醒词不能为空哦"
-            feedbackIsError = true
+            withAnimation(.easeOut(duration: 0.16)) {
+                feedback = .error("提醒词不能为空")
+            }
             return
         }
 
@@ -731,24 +678,34 @@ struct SettingsView: View {
         minuteText = String(format: "%02d", minute)
         secondText = String(format: "%02d", second)
         message = trimmedMessage
-        PetSettings.saveTime("\(hourText):\(minuteText):\(secondText)")
-        PetSettings.saveMessage(trimmedMessage)
+        PetSettings.save(
+            ReminderSettings(
+                hour: hour,
+                minute: minute,
+                second: second,
+                message: trimmedMessage,
+                selectedMilkTeaID: milkTeaStore.selectedMilkTeaID
+            )
+        )
         onSettingsSaved()
-        feedback = "保存好啦，记得准时喝水或奶茶 ✓"
-        feedbackIsError = false
+        withAnimation(.easeOut(duration: 0.16)) {
+            feedback = .success("已保存")
+        }
     }
 
-    private func testReminder() {
-        let trimmedMessage = message.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedMessage.isEmpty else {
-            feedback = "请先输入提醒词再测试"
-            feedbackIsError = true
-            return
-        }
+    private func loadSettings() {
+        let settings = PetSettings.load()
+        hourText = String(format: "%02d", settings.hour)
+        minuteText = String(format: "%02d", settings.minute)
+        secondText = String(format: "%02d", settings.second)
+        message = settings.message
+        feedback = .idle
+    }
 
-        onTestReminder(trimmedMessage)
-        feedback = "测试气泡已显示，不计入每日提醒"
-        feedbackIsError = false
+    private func clearFeedback() {
+        if feedback != .idle {
+            feedback = .idle
+        }
     }
 }
 
@@ -756,81 +713,29 @@ struct SettingsView: View {
 
 struct TimeTextField: View {
     @Binding var text: String
-    let label: String
     let accessibilityLabel: String
 
     var body: some View {
-        VStack(spacing: 3) {
-            TextField("00", text: $text)
-                .textFieldStyle(.plain)
-                .font(.system(size: 19, weight: .bold, design: .monospaced))
-                .foregroundColor(PixelTheme.brown)
-                .multilineTextAlignment(.center)
-                .frame(width: 44, height: 34)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color.white.opacity(0.9))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(PixelTheme.brown.opacity(0.65), lineWidth: 1.5)
-                )
-                .accessibilityLabel(accessibilityLabel)
-                .onChange(of: text) { newValue in
-                    let digits = String(newValue.filter(\.isNumber).prefix(2))
-                    if digits != newValue {
-                        text = digits
-                    }
-                }
-
-            Text(label)
-                .font(.system(size: 9, weight: .medium))
-                .foregroundColor(PixelTheme.mutedBrown)
-        }
-    }
-}
-
-// MARK: - 奶茶主题小图标
-
-struct MiniBobaCupIcon: View {
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(Color(red: 0.91, green: 0.35, blue: 0.34))
-                .frame(width: 5, height: 27)
-                .rotationEffect(.degrees(7))
-                .offset(x: 6, y: -13)
-
-            ZStack(alignment: .bottom) {
-                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .fill(PixelTheme.tea)
-
-                HStack(spacing: 3) {
-                    ForEach(0..<4, id: \.self) { _ in
-                        Circle()
-                            .fill(PixelTheme.cocoa)
-                            .frame(width: 5, height: 5)
-                    }
-                }
-                .padding(.bottom, 5)
-            }
-            .frame(width: 34, height: 35)
-            .overlay(
-                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .stroke(PixelTheme.cocoa, lineWidth: 2)
+        TextField("00", text: $text)
+            .textFieldStyle(.plain)
+            .font(.system(size: 17, weight: .semibold, design: .monospaced))
+            .foregroundColor(AppTheme.textPrimary)
+            .multilineTextAlignment(.center)
+            .frame(width: 58, height: 40)
+            .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(AppTheme.surface)
             )
-            .offset(y: 6)
-
-            Capsule()
-                .fill(PixelTheme.cream)
-                .frame(width: 40, height: 7)
-                .overlay(Capsule().stroke(PixelTheme.cocoa, lineWidth: 2))
-                .offset(y: -11)
-        }
-        .frame(width: 48, height: 48)
-        .background(
-            RoundedRectangle(cornerRadius: 13, style: .continuous)
-                .fill(PixelTheme.caramelLight.opacity(0.62))
-        )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(AppTheme.border, lineWidth: 1)
+            )
+            .accessibilityLabel(accessibilityLabel)
+            .onChange(of: text) { newValue in
+                let digits = String(newValue.filter(\.isNumber).prefix(2))
+                if digits != newValue {
+                    text = digits
+                }
+            }
     }
 }

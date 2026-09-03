@@ -5,6 +5,10 @@ let package = Package(
     name: "MilkTeaPet",
     platforms: [.macOS(.v13)],
     targets: [
-        .executableTarget(name: "MilkTeaPet", path: "Sources/MilkTeaPet")
+        .executableTarget(
+            name: "MilkTeaPet",
+            path: "Sources/MilkTeaPet",
+            resources: [.process("Resources")]
+        )
     ]
 )
