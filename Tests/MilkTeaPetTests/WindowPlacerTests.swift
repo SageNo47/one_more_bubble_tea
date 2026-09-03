@@ -43,4 +43,24 @@ final class WindowPlacerTests: XCTestCase {
 
         XCTAssertEqual(result.origin.x, 12)
     }
+
+    func testRecordEffectStartsCenteredAbovePet() {
+        let origin = RecordEffectPlacement.origin(
+            effectSize: NSSize(width: 96, height: 96),
+            relativeTo: NSRect(x: 400, y: 300, width: 112, height: 140),
+            visibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800)
+        )
+
+        XCTAssertEqual(origin, NSPoint(x: 408, y: 422))
+    }
+
+    func testRecordEffectStaysInsideTopAndSideMargins() {
+        let origin = RecordEffectPlacement.origin(
+            effectSize: NSSize(width: 96, height: 96),
+            relativeTo: NSRect(x: 960, y: 720, width: 112, height: 140),
+            visibleFrame: NSRect(x: 0, y: 0, width: 1000, height: 800)
+        )
+
+        XCTAssertEqual(origin, NSPoint(x: 892, y: 692))
+    }
 }

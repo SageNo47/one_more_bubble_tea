@@ -9,6 +9,7 @@ enum AppTheme {
     static let textPrimary = Color(red: 0.18, green: 0.17, blue: 0.16)
     static let textSecondary = Color(red: 0.43, green: 0.41, blue: 0.38)
     static let accent = Color(red: 0.38, green: 0.31, blue: 0.27)
+    static let recordEffect = Color(red: 0.46, green: 0.35, blue: 0.29)
     static let danger = Color(red: 0.76, green: 0.22, blue: 0.20)
     static let success = Color(red: 0.22, green: 0.48, blue: 0.31)
 }

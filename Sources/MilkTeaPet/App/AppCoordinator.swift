@@ -4,6 +4,7 @@ import AppKit
 final class AppCoordinator {
     private let dependencies: AppDependencies
     private let reminderWindowController = ReminderWindowController()
+    private let recordEffectWindowController = RecordEffectWindowController()
     private let settingsWindowController = SettingsWindowController()
     private var petWindowController: PetWindowController?
 
@@ -47,7 +48,10 @@ final class AppCoordinator {
         reminderWindowController.show(
             relativeTo: petWindow,
             message: message ?? dependencies.settingsRepository.load().message,
-            onAccept: {},
+            onAccept: { [weak self, weak petWindow] in
+                guard let self, let petWindow else { return }
+                self.recordEffectWindowController.show(relativeTo: petWindow)
+            },
             onDecline: {}
         )
     }
