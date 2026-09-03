@@ -519,6 +519,7 @@ struct SettingsView: View {
 
     @State private var hourText = "15"
     @State private var minuteText = "00"
+    @State private var secondText = "00"
     @State private var message = ""
     @State private var feedback = "设置只会保存在这台 Mac 上"
     @State private var feedbackIsError = false
@@ -560,6 +561,7 @@ struct SettingsView: View {
             if let components = PetSettings.loadTime() {
                 hourText = String(format: "%02d", components.hour ?? 15)
                 minuteText = String(format: "%02d", components.minute ?? 0)
+                secondText = String(format: "%02d", components.second ?? 0)
             }
         }
     }
@@ -600,40 +602,43 @@ struct SettingsView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(PixelTheme.cocoa)
 
-                HStack(spacing: 8) {
-                    Text("每天提醒一次")
-                        .font(.system(size: 10))
-                        .foregroundColor(PixelTheme.mutedBrown)
+                Text("每天按设置时间提醒")
+                    .font(.system(size: 10))
+                    .foregroundColor(PixelTheme.mutedBrown)
 
-                    Button(action: testReminder) {
-                        Label("测试气泡", systemImage: "play.fill")
-                            .font(.system(size: 9, weight: .semibold))
-                            .foregroundColor(PixelTheme.brown)
-                            .padding(.horizontal, 7)
-                            .frame(height: 22)
-                            .background(
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .fill(Color.white.opacity(0.72))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .stroke(PixelTheme.caramel.opacity(0.72), lineWidth: 1)
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .help("使用当前提醒词预览气泡，不计入每日提醒")
+                Button(action: testReminder) {
+                    Label("测试气泡", systemImage: "play.fill")
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundColor(PixelTheme.brown)
+                        .padding(.horizontal, 7)
+                        .frame(height: 22)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .fill(Color.white.opacity(0.72))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .stroke(PixelTheme.caramel.opacity(0.72), lineWidth: 1)
+                        )
                 }
+                .buttonStyle(.plain)
+                .help("使用当前提醒词预览气泡，不影响正式提醒")
             }
 
             Spacer(minLength: 8)
 
-            HStack(alignment: .top, spacing: 7) {
+            HStack(alignment: .top, spacing: 5) {
                 TimeTextField(text: $hourText, label: "时", accessibilityLabel: "小时")
                 Text(":")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundColor(PixelTheme.brown)
                     .padding(.top, 6)
                 TimeTextField(text: $minuteText, label: "分", accessibilityLabel: "分钟")
+                Text(":")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(PixelTheme.brown)
+                    .padding(.top, 6)
+                TimeTextField(text: $secondText, label: "秒", accessibilityLabel: "秒钟")
             }
         }
         .padding(.horizontal, 15)
@@ -708,8 +713,9 @@ struct SettingsView: View {
 
     private func save() {
         guard let hour = Int(hourText), (0...23).contains(hour),
-              let minute = Int(minuteText), (0...59).contains(minute) else {
-            feedback = "请输入 00:00–23:59 之间的时间"
+              let minute = Int(minuteText), (0...59).contains(minute),
+              let second = Int(secondText), (0...59).contains(second) else {
+            feedback = "请输入 00:00:00–23:59:59 之间的时间"
             feedbackIsError = true
             return
         }
@@ -723,8 +729,9 @@ struct SettingsView: View {
 
         hourText = String(format: "%02d", hour)
         minuteText = String(format: "%02d", minute)
+        secondText = String(format: "%02d", second)
         message = trimmedMessage
-        PetSettings.saveTime("\(hourText):\(minuteText)")
+        PetSettings.saveTime("\(hourText):\(minuteText):\(secondText)")
         PetSettings.saveMessage(trimmedMessage)
         onSettingsSaved()
         feedback = "保存好啦，记得准时喝水或奶茶 ✓"
@@ -759,7 +766,7 @@ struct TimeTextField: View {
                 .font(.system(size: 19, weight: .bold, design: .monospaced))
                 .foregroundColor(PixelTheme.brown)
                 .multilineTextAlignment(.center)
-                .frame(width: 48, height: 34)
+                .frame(width: 44, height: 34)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .fill(Color.white.opacity(0.9))

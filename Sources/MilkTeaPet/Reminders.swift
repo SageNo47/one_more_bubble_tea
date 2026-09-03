@@ -4,15 +4,25 @@ import AppKit
 // MARK: - 设置存储
 
 enum PetSettings {
-    static let timeKey = "reminderTime"      // "HH:mm"
+    static let timeKey = "reminderTime"      // "HH:mm:ss"
     static let messageKey = "reminderMessage"
-    private static let lastReminderDateKey = "lastReminderDate"
 
     static func loadTime() -> DateComponents? {
-        let s = UserDefaults.standard.string(forKey: timeKey) ?? "15:00"
-        let parts = s.split(separator: ":")
-        guard parts.count == 2, let h = Int(parts[0]), let m = Int(parts[1]) else { return nil }
-        return DateComponents(hour: h, minute: m)
+        let value = UserDefaults.standard.string(forKey: timeKey) ?? "15:00:00"
+        return timeComponents(from: value)
+    }
+
+    static func timeComponents(from value: String) -> DateComponents? {
+        let parts = value.split(separator: ":", omittingEmptySubsequences: false)
+        guard (2...3).contains(parts.count),
+              let hour = Int(parts[0]), (0...23).contains(hour),
+              let minute = Int(parts[1]), (0...59).contains(minute) else {
+            return nil
+        }
+
+        let second = parts.count == 3 ? Int(parts[2]) : 0
+        guard let second, (0...59).contains(second) else { return nil }
+        return DateComponents(hour: hour, minute: minute, second: second)
     }
 
     static func saveTime(_ s: String) {
@@ -26,14 +36,6 @@ enum PetSettings {
     static func saveMessage(_ s: String) {
         UserDefaults.standard.set(s, forKey: messageKey)
     }
-
-    static func loadLastReminderDate() -> Date? {
-        UserDefaults.standard.object(forKey: lastReminderDateKey) as? Date
-    }
-
-    static func saveLastReminderDate(_ date: Date) {
-        UserDefaults.standard.set(date, forKey: lastReminderDateKey)
-    }
 }
 
 // MARK: - 提醒调度
@@ -45,7 +47,6 @@ final class ReminderScheduler: ObservableObject {
     private var timer: Timer?
     private var defaultCenterObservers: [NSObjectProtocol] = []
     private var workspaceObservers: [NSObjectProtocol] = []
-    private var lastFiredDate = PetSettings.loadLastReminderDate()
     private(set) var pendingMessage: String?
     private var isStarted = false
 
@@ -67,17 +68,8 @@ final class ReminderScheduler: ObservableObject {
         var calendar = Calendar.current
         calendar.timeZone = .current
         guard let target = PetSettings.loadTime(),
-              var fireDate = Self.nextFireDate(after: now, target: target, calendar: calendar) else {
+              let fireDate = Self.nextFireDate(after: now, target: target, calendar: calendar) else {
             return
-        }
-
-        if let lastFiredDate, calendar.isDate(lastFiredDate, inSameDayAs: fireDate) {
-            guard let nextDate = Self.nextFireDate(
-                after: fireDate,
-                target: target,
-                calendar: calendar
-            ) else { return }
-            fireDate = nextDate
         }
 
         let scheduledDate = fireDate
@@ -103,13 +95,14 @@ final class ReminderScheduler: ObservableObject {
         calendar: Calendar
     ) -> Date? {
         guard let hour = target.hour, (0...23).contains(hour),
-              let minute = target.minute, (0...59).contains(minute) else {
+              let minute = target.minute, (0...59).contains(minute),
+              let second = target.second, (0...59).contains(second) else {
             return nil
         }
 
         return calendar.nextDate(
             after: date,
-            matching: DateComponents(hour: hour, minute: minute, second: 0),
+            matching: DateComponents(hour: hour, minute: minute, second: second),
             matchingPolicy: .nextTime,
             repeatedTimePolicy: .first,
             direction: .forward
@@ -163,19 +156,14 @@ final class ReminderScheduler: ObservableObject {
 
     private func fire(scheduledFor scheduledDate: Date) {
         let now = Date()
-        var calendar = Calendar.current
-        calendar.timeZone = .current
 
         // 防止休眠期间错过的计时器在恢复运行后补弹旧提醒。
         let deliveryDelay = now.timeIntervalSince(scheduledDate)
-        guard deliveryDelay >= 0, deliveryDelay < 60,
-              lastFiredDate.map({ !calendar.isDate($0, inSameDayAs: now) }) ?? true else {
+        guard deliveryDelay >= 0, deliveryDelay < 60 else {
             reschedule()
             return
         }
 
-        lastFiredDate = now
-        PetSettings.saveLastReminderDate(now)
         requestReminder(message: nil)
         reschedule()
     }
