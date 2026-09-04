@@ -29,7 +29,8 @@ final class DrinkHistoryWindowController {
         )
         let panel = makeFloatingPanel(
             size: PanelMetrics.drinkHistorySize,
-            resizable: true
+            resizable: true,
+            alwaysOnTop: false
         )
         panel.contentMinSize = PanelMetrics.drinkHistoryMinimumSize
         panel.isMovable = true

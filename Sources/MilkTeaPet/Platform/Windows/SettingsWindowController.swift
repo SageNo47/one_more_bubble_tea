@@ -19,7 +19,8 @@ final class SettingsWindowController {
 
         let panel = makeFloatingPanel(
             size: PanelMetrics.settingsSize,
-            resizable: true
+            resizable: true,
+            alwaysOnTop: false
         )
         panel.contentMinSize = PanelMetrics.settingsMinimumSize
         panel.isMovable = true

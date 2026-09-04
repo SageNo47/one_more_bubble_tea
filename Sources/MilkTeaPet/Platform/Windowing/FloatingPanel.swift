@@ -4,7 +4,11 @@ final class FloatingPanel: NSPanel {
     override var canBecomeKey: Bool { true }
 }
 
-func makeFloatingPanel(size: NSSize, resizable: Bool = false) -> NSPanel {
+func makeFloatingPanel(
+    size: NSSize,
+    resizable: Bool = false,
+    alwaysOnTop: Bool = true
+) -> NSPanel {
     var styleMask: NSWindow.StyleMask = [.borderless, .nonactivatingPanel]
     if resizable {
         styleMask.insert(.resizable)
@@ -16,9 +20,11 @@ func makeFloatingPanel(size: NSSize, resizable: Bool = false) -> NSPanel {
         backing: .buffered,
         defer: false
     )
-    panel.isFloatingPanel = true
-    panel.level = .statusBar
-    panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
+    panel.isFloatingPanel = alwaysOnTop
+    panel.level = alwaysOnTop ? .statusBar : .normal
+    panel.collectionBehavior = alwaysOnTop
+        ? [.canJoinAllSpaces, .stationary, .ignoresCycle]
+        : [.moveToActiveSpace]
     panel.isOpaque = false
     panel.backgroundColor = .clear
     panel.hasShadow = false
