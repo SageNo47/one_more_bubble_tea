@@ -26,8 +26,8 @@ struct SettingsView: View {
             .padding(16)
         }
         .frame(
-            width: PanelMetrics.settingsSize.width,
-            height: PanelMetrics.settingsSize.height
+            minWidth: PanelMetrics.settingsMinimumSize.width,
+            minHeight: PanelMetrics.settingsMinimumSize.height
         )
     }
 

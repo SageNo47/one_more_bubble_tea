@@ -17,7 +17,11 @@ final class SettingsWindowController {
             return
         }
 
-        let panel = makeFloatingPanel(size: PanelMetrics.settingsSize)
+        let panel = makeFloatingPanel(
+            size: PanelMetrics.settingsSize,
+            resizable: true
+        )
+        panel.contentMinSize = PanelMetrics.settingsMinimumSize
         panel.isMovable = true
         panel.isMovableByWindowBackground = true
 
@@ -30,10 +34,6 @@ final class SettingsWindowController {
             rootView: SettingsView(
                 viewModel: viewModel,
                 onClose: { [weak self] in self?.close() }
-            )
-            .frame(
-                width: PanelMetrics.settingsSize.width,
-                height: PanelMetrics.settingsSize.height
             )
         )
         hosting.frame = NSRect(origin: .zero, size: PanelMetrics.settingsSize)

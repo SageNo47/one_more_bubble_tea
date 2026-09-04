@@ -22,22 +22,31 @@ struct DrinkHistoryView: View {
                 Rectangle()
                     .fill(AppTheme.border.opacity(0.7))
                     .frame(height: 1)
-                HStack(spacing: 0) {
-                    calendarPane
-                        .frame(width: PanelMetrics.drinkHistoryCalendarWidth)
-                    Rectangle()
-                        .fill(AppTheme.border.opacity(0.7))
-                        .frame(width: 1)
-                    detailPane
+                GeometryReader { geometry in
+                    HStack(spacing: 0) {
+                        calendarPane
+                            .frame(width: calendarWidth(for: geometry.size.width))
+                        Rectangle()
+                            .fill(AppTheme.border.opacity(0.7))
+                            .frame(width: 1)
+                        detailPane
+                    }
                 }
             }
             .padding(2)
         }
         .frame(
-            width: PanelMetrics.drinkHistorySize.width,
-            height: PanelMetrics.drinkHistorySize.height
+            minWidth: PanelMetrics.drinkHistoryMinimumSize.width,
+            minHeight: PanelMetrics.drinkHistoryMinimumSize.height
         )
         .onAppear(perform: viewModel.load)
+    }
+
+    private func calendarWidth(for totalWidth: CGFloat) -> CGFloat {
+        min(
+            PanelMetrics.drinkHistoryCalendarWidth,
+            max(440, totalWidth * 2 / 3)
+        )
     }
 
     private var header: some View {

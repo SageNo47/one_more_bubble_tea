@@ -13,11 +13,11 @@ struct PetView: View {
         AnimatedMilkTea(milkTea: milkTeaStore.selectedMilkTea)
             .contextMenu {
                 Button("记录", action: onShowHistory)
-                Button("设置…", action: onShowSettings)
+                Button("设置", action: onShowSettings)
                 Divider()
                 Button("关闭", action: onQuit)
             }
-            .onTapGesture(perform: onShowSettings)
+            .onTapGesture(perform: onShowHistory)
             .onChange(of: scheduler.showReminder) { show in
                 if show {
                     onShowReminder(scheduler.pendingMessage)
