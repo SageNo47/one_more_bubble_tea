@@ -35,6 +35,7 @@ final class PetWindowController {
     private let milkTeaStore: MilkTeaStore
     private let scheduler: ReminderScheduler
     private let onShowSettings: () -> Void
+    private let onShowHistory: () -> Void
     private let onShowReminder: (String?) -> Void
     private let onQuit: () -> Void
 
@@ -42,12 +43,14 @@ final class PetWindowController {
         milkTeaStore: MilkTeaStore,
         scheduler: ReminderScheduler,
         onShowSettings: @escaping () -> Void,
+        onShowHistory: @escaping () -> Void,
         onShowReminder: @escaping (String?) -> Void,
         onQuit: @escaping () -> Void
     ) {
         self.milkTeaStore = milkTeaStore
         self.scheduler = scheduler
         self.onShowSettings = onShowSettings
+        self.onShowHistory = onShowHistory
         self.onShowReminder = onShowReminder
         self.onQuit = onQuit
     }
@@ -64,6 +67,7 @@ final class PetWindowController {
                 milkTeaStore: milkTeaStore,
                 scheduler: scheduler,
                 onShowSettings: onShowSettings,
+                onShowHistory: onShowHistory,
                 onShowReminder: onShowReminder,
                 onQuit: onQuit
             )

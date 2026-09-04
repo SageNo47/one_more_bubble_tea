@@ -42,6 +42,16 @@
 		100000000000000000000021 /* libMilkTeaPersistence.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00000000000000000000003 /* libMilkTeaPersistence.a */; };
 		100000000000000000000022 /* libMilkTeaDomain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C00000000000000000000002 /* libMilkTeaDomain.a */; };
 		100000000000000000000023 /* RecordEffectWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000014 /* RecordEffectWindowController.swift */; };
+		100000000000000000000024 /* LocalDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000005 /* LocalDay.swift */; };
+		100000000000000000000025 /* DrinkRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000006 /* DrinkRecord.swift */; };
+		100000000000000000000026 /* DrinkStatisticsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000007 /* DrinkStatisticsCalculator.swift */; };
+		100000000000000000000027 /* CoreDataDrinkRecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00000000000000000000004 /* CoreDataDrinkRecordRepository.swift */; };
+		100000000000000000000028 /* DrinkHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000015 /* DrinkHistoryViewModel.swift */; };
+		100000000000000000000029 /* DrinkHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000016 /* DrinkHistoryView.swift */; };
+		10000000000000000000002A /* DrinkHistoryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000017 /* DrinkHistoryWindowController.swift */; };
+		10000000000000000000002B /* DrinkStatisticsCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000006 /* DrinkStatisticsCalculatorTests.swift */; };
+		10000000000000000000002C /* CoreDataDrinkRecordRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000007 /* CoreDataDrinkRecordRepositoryTests.swift */; };
+		10000000000000000000002D /* DrinkHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000008 /* DrinkHistoryViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +84,9 @@
 		A00000000000000000000012 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUI/AppTheme.swift; sourceTree = "<group>"; };
 		A00000000000000000000013 /* MilkTeaPet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MilkTeaPet/MilkTeaPet.entitlements; sourceTree = SOURCE_ROOT; };
 		A00000000000000000000014 /* RecordEffectWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windows/RecordEffectWindowController.swift; sourceTree = "<group>"; };
+		A00000000000000000000015 /* DrinkHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/DrinkHistory/DrinkHistoryViewModel.swift; sourceTree = "<group>"; };
+		A00000000000000000000016 /* DrinkHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/DrinkHistory/DrinkHistoryView.swift; sourceTree = "<group>"; };
+		A00000000000000000000017 /* DrinkHistoryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform/Windows/DrinkHistoryWindowController.swift; sourceTree = "<group>"; };
 		B00000000000000000000001 /* milk-tea-pet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Resources/milk-tea-pet.png; sourceTree = "<group>"; };
 		C00000000000000000000001 /* MilkTeaPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MilkTeaPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00000000000000000000002 /* libMilkTeaDomain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMilkTeaDomain.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,14 +96,21 @@
 		D00000000000000000000002 /* ReminderSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/ReminderSettings.swift; sourceTree = "<group>"; };
 		D00000000000000000000003 /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories/Repositories.swift; sourceTree = "<group>"; };
 		D00000000000000000000004 /* ReminderScheduleCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/ReminderScheduleCalculator.swift; sourceTree = "<group>"; };
+		D00000000000000000000005 /* LocalDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/LocalDay.swift; sourceTree = "<group>"; };
+		D00000000000000000000006 /* DrinkRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/DrinkRecord.swift; sourceTree = "<group>"; };
+		D00000000000000000000007 /* DrinkStatisticsCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/DrinkStatisticsCalculator.swift; sourceTree = "<group>"; };
 		E00000000000000000000001 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData/CoreDataStack.swift; sourceTree = "<group>"; };
 		E00000000000000000000002 /* CoreDataMilkTeaRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData/CoreDataMilkTeaRepository.swift; sourceTree = "<group>"; };
 		E00000000000000000000003 /* UserDefaultsSettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings/UserDefaultsSettingsRepository.swift; sourceTree = "<group>"; };
+		E00000000000000000000004 /* CoreDataDrinkRecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData/CoreDataDrinkRecordRepository.swift; sourceTree = "<group>"; };
 		F00000000000000000000001 /* ReminderScheduleCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaDomainTests/ReminderScheduleCalculatorTests.swift; sourceTree = "<group>"; };
 		F00000000000000000000002 /* CoreDataMilkTeaRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPersistenceTests/CoreDataMilkTeaRepositoryTests.swift; sourceTree = "<group>"; };
 		F00000000000000000000003 /* UserDefaultsSettingsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPersistenceTests/UserDefaultsSettingsRepositoryTests.swift; sourceTree = "<group>"; };
 		F00000000000000000000004 /* MilkTeaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPetTests/MilkTeaStoreTests.swift; sourceTree = "<group>"; };
 		F00000000000000000000005 /* WindowPlacerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPetTests/WindowPlacerTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000006 /* DrinkStatisticsCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaDomainTests/DrinkStatisticsCalculatorTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000007 /* CoreDataDrinkRecordRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPersistenceTests/CoreDataDrinkRecordRepositoryTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000008 /* DrinkHistoryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilkTeaPetTests/DrinkHistoryViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +122,10 @@
 
 /* Begin PBXGroup section */
 		000000000000000000000001 = {isa = PBXGroup; children = (000000000000000000000002 /* MilkTeaPet */, 000000000000000000000003 /* MilkTeaDomain */, 000000000000000000000004 /* MilkTeaPersistence */, 000000000000000000000005 /* Tests */, 000000000000000000000006 /* Products */,); sourceTree = "<group>"; };
-		000000000000000000000002 /* MilkTeaPet */ = {isa = PBXGroup; children = (A00000000000000000000001, A00000000000000000000002, A00000000000000000000003, A00000000000000000000004, A00000000000000000000005, A00000000000000000000006, A00000000000000000000007, A00000000000000000000008, A00000000000000000000009, A0000000000000000000000A, A0000000000000000000000B, A0000000000000000000000C, A0000000000000000000000D, A0000000000000000000000E, A0000000000000000000000F, A00000000000000000000010, A00000000000000000000011, A00000000000000000000012, A00000000000000000000014, B00000000000000000000001, A00000000000000000000013,); path = Sources/MilkTeaPet; sourceTree = SOURCE_ROOT; };
-		000000000000000000000003 /* MilkTeaDomain */ = {isa = PBXGroup; children = (D00000000000000000000001, D00000000000000000000002, D00000000000000000000003, D00000000000000000000004,); path = Sources/MilkTeaDomain; sourceTree = SOURCE_ROOT; };
-		000000000000000000000004 /* MilkTeaPersistence */ = {isa = PBXGroup; children = (E00000000000000000000001, E00000000000000000000002, E00000000000000000000003,); path = Sources/MilkTeaPersistence; sourceTree = SOURCE_ROOT; };
-		000000000000000000000005 /* Tests */ = {isa = PBXGroup; children = (F00000000000000000000001, F00000000000000000000002, F00000000000000000000003, F00000000000000000000004, F00000000000000000000005,); path = Tests; sourceTree = SOURCE_ROOT; };
+		000000000000000000000002 /* MilkTeaPet */ = {isa = PBXGroup; children = (A00000000000000000000001, A00000000000000000000002, A00000000000000000000003, A00000000000000000000004, A00000000000000000000005, A00000000000000000000006, A00000000000000000000007, A00000000000000000000008, A00000000000000000000009, A0000000000000000000000A, A0000000000000000000000B, A0000000000000000000000C, A0000000000000000000000D, A0000000000000000000000E, A0000000000000000000000F, A00000000000000000000010, A00000000000000000000011, A00000000000000000000012, A00000000000000000000014, A00000000000000000000015, A00000000000000000000016, A00000000000000000000017, B00000000000000000000001, A00000000000000000000013,); path = Sources/MilkTeaPet; sourceTree = SOURCE_ROOT; };
+		000000000000000000000003 /* MilkTeaDomain */ = {isa = PBXGroup; children = (D00000000000000000000001, D00000000000000000000002, D00000000000000000000003, D00000000000000000000004, D00000000000000000000005, D00000000000000000000006, D00000000000000000000007,); path = Sources/MilkTeaDomain; sourceTree = SOURCE_ROOT; };
+		000000000000000000000004 /* MilkTeaPersistence */ = {isa = PBXGroup; children = (E00000000000000000000001, E00000000000000000000002, E00000000000000000000003, E00000000000000000000004,); path = Sources/MilkTeaPersistence; sourceTree = SOURCE_ROOT; };
+		000000000000000000000005 /* Tests */ = {isa = PBXGroup; children = (F00000000000000000000001, F00000000000000000000002, F00000000000000000000003, F00000000000000000000004, F00000000000000000000005, F00000000000000000000006, F00000000000000000000007, F00000000000000000000008,); path = Tests; sourceTree = SOURCE_ROOT; };
 		000000000000000000000006 /* Products */ = {isa = PBXGroup; children = (C00000000000000000000001, C00000000000000000000002, C00000000000000000000003, C00000000000000000000004,); name = Products; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
@@ -125,10 +145,10 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		200000000000000000000011 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000014, 100000000000000000000015, 100000000000000000000016, 100000000000000000000017,); runOnlyForDeploymentPostprocessing = 0; };
-		200000000000000000000012 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000018, 100000000000000000000019, 10000000000000000000001A,); runOnlyForDeploymentPostprocessing = 0; };
-		200000000000000000000013 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000001, 100000000000000000000002, 100000000000000000000003, 100000000000000000000004, 100000000000000000000005, 100000000000000000000006, 100000000000000000000007, 100000000000000000000008, 100000000000000000000009, 10000000000000000000000A, 10000000000000000000000B, 10000000000000000000000C, 10000000000000000000000D, 10000000000000000000000E, 10000000000000000000000F, 100000000000000000000010, 100000000000000000000011, 100000000000000000000012, 100000000000000000000023,); runOnlyForDeploymentPostprocessing = 0; };
-		200000000000000000000014 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (10000000000000000000001B, 10000000000000000000001C, 10000000000000000000001D, 10000000000000000000001E, 10000000000000000000001F,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000011 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000014, 100000000000000000000015, 100000000000000000000016, 100000000000000000000017, 100000000000000000000024, 100000000000000000000025, 100000000000000000000026,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000012 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000018, 100000000000000000000019, 10000000000000000000001A, 100000000000000000000027,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000013 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (100000000000000000000001, 100000000000000000000002, 100000000000000000000003, 100000000000000000000004, 100000000000000000000005, 100000000000000000000006, 100000000000000000000007, 100000000000000000000008, 100000000000000000000009, 10000000000000000000000A, 10000000000000000000000B, 10000000000000000000000C, 10000000000000000000000D, 10000000000000000000000E, 10000000000000000000000F, 100000000000000000000010, 100000000000000000000011, 100000000000000000000012, 100000000000000000000023, 100000000000000000000028, 100000000000000000000029, 10000000000000000000002A,); runOnlyForDeploymentPostprocessing = 0; };
+		200000000000000000000014 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (10000000000000000000001B, 10000000000000000000001C, 10000000000000000000001D, 10000000000000000000001E, 10000000000000000000001F, 10000000000000000000002B, 10000000000000000000002C, 10000000000000000000002D,); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */

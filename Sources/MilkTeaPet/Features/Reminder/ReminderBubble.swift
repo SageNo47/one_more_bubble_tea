@@ -3,8 +3,11 @@ import SwiftUI
 struct ReminderBubble: View {
     let text: String
     let edge: WindowPlacer.Edge
-    let onAccept: () -> Void
+    let onAccept: () throws -> Void
     let onDecline: () -> Void
+
+    @State private var isAccepting = false
+    @State private var errorMessage: String?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -27,16 +30,21 @@ struct ReminderBubble: View {
 
     private var bubbleBody: some View {
         VStack(spacing: 14) {
-            Text(text)
+            Text(errorMessage ?? text)
                 .font(.system(size: 14, weight: .regular))
-                .foregroundColor(AppTheme.textPrimary)
+                .foregroundColor(errorMessage == nil ? AppTheme.textPrimary : AppTheme.danger)
                 .multilineTextAlignment(.center)
                 .lineSpacing(2)
                 .lineLimit(2)
                 .frame(maxWidth: .infinity)
 
             HStack(spacing: 8) {
-                BubbleButton(title: "来一杯", isPrimary: true, action: onAccept)
+                BubbleButton(
+                    title: isAccepting ? "记录中…" : "来一杯",
+                    isPrimary: true,
+                    isEnabled: !isAccepting,
+                    action: accept
+                )
                 BubbleButton(title: "今天不喝", isPrimary: false, action: onDecline)
             }
         }
@@ -61,11 +69,23 @@ struct ReminderBubble: View {
                 Triangle().stroke(AppTheme.windowBorder, lineWidth: 2)
             )
     }
+
+    private func accept() {
+        guard !isAccepting else { return }
+        isAccepting = true
+        do {
+            try onAccept()
+        } catch {
+            errorMessage = "记录失败，请重试"
+            isAccepting = false
+        }
+    }
 }
 
 private struct BubbleButton: View {
     let title: String
     let isPrimary: Bool
+    var isEnabled = true
     let action: () -> Void
 
     var body: some View {
@@ -83,6 +103,8 @@ private struct BubbleButton: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .opacity(isEnabled ? 1 : 0.62)
     }
 }
 

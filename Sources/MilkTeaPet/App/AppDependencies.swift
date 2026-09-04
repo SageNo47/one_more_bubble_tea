@@ -6,17 +6,20 @@ final class AppDependencies {
     let coreDataStack: CoreDataStack
     let settingsRepository: any SettingsRepository
     let milkTeaRepository: any MilkTeaRepository
+    let drinkRecordRepository: any DrinkRecordRepository
     let reminderScheduler: ReminderScheduler
     let milkTeaStore: MilkTeaStore
 
     private init(
         coreDataStack: CoreDataStack,
         settingsRepository: any SettingsRepository,
-        milkTeaRepository: any MilkTeaRepository
+        milkTeaRepository: any MilkTeaRepository,
+        drinkRecordRepository: any DrinkRecordRepository
     ) {
         self.coreDataStack = coreDataStack
         self.settingsRepository = settingsRepository
         self.milkTeaRepository = milkTeaRepository
+        self.drinkRecordRepository = drinkRecordRepository
         reminderScheduler = ReminderScheduler(settingsRepository: settingsRepository)
         milkTeaStore = MilkTeaStore(
             milkTeaRepository: milkTeaRepository,
@@ -28,10 +31,12 @@ final class AppDependencies {
         let coreDataStack = try CoreDataStack()
         let settingsRepository = UserDefaultsSettingsRepository()
         let milkTeaRepository = CoreDataMilkTeaRepository(container: coreDataStack.container)
+        let drinkRecordRepository = CoreDataDrinkRecordRepository(container: coreDataStack.container)
         return AppDependencies(
             coreDataStack: coreDataStack,
             settingsRepository: settingsRepository,
-            milkTeaRepository: milkTeaRepository
+            milkTeaRepository: milkTeaRepository,
+            drinkRecordRepository: drinkRecordRepository
         )
     }
 }

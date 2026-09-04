@@ -10,13 +10,13 @@ final class ReminderWindowController {
     private var petMoveObserver: NSObjectProtocol?
     private var bubbleEdge: WindowPlacer.Edge?
     private var message = ""
-    private var onAccept: () -> Void = {}
+    private var onAccept: () throws -> Void = {}
     private var onDecline: () -> Void = {}
 
     func show(
         relativeTo petWindow: NSWindow,
         message: String,
-        onAccept: @escaping () -> Void,
+        onAccept: @escaping () throws -> Void,
         onDecline: @escaping () -> Void
     ) {
         close()
@@ -86,7 +86,7 @@ final class ReminderWindowController {
             edge: edge,
             onAccept: { [weak self] in
                 guard let self else { return }
-                self.onAccept()
+                try self.onAccept()
                 self.close()
             },
             onDecline: { [weak self] in

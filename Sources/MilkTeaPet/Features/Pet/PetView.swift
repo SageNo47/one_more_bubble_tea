@@ -5,12 +5,14 @@ struct PetView: View {
     @ObservedObject var scheduler: ReminderScheduler
 
     let onShowSettings: () -> Void
+    let onShowHistory: () -> Void
     let onShowReminder: (String?) -> Void
     let onQuit: () -> Void
 
     var body: some View {
         AnimatedMilkTea(milkTea: milkTeaStore.selectedMilkTea)
             .contextMenu {
+                Button("记录", action: onShowHistory)
                 Button("设置…", action: onShowSettings)
                 Divider()
                 Button("关闭", action: onQuit)
